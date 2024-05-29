@@ -1,0 +1,16 @@
+{
+    "common.flora": "Flora",
+    "common.floraGroup": "Grupo Flora",
+    "common.signIn": "Entrar",
+    "common.anonymAccess": "Acesse anonimamente",
+    "common.feed": "Feed",
+    "common.profile": "Perfil",
+    "common.identification": "Identificação",
+    "common.sendNewImage": "Enviar nova imagem",
+    "auth.name": "Nome",
+    "auth.email": "Email",
+    "auth.password": "Senha",
+    "identification.selectMethod": "Selecione o método para identificação",
+    "identification.predictResponse": "Está fruta é uma espécie de: $1",
+    "identification.predictionPercentage": "Probabilidade de ser a espécie certa: $1%"
+}

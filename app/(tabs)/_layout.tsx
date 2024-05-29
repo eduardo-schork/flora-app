@@ -1,59 +1,51 @@
+import { Tabs } from 'expo-router';
 import React from 'react';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { Link, Tabs } from 'expo-router';
-import { Pressable } from 'react-native';
 
-import Colors from '@/constants/Colors';
-import { useColorScheme } from '@/components/useColorScheme';
-import { useClientOnlyValue } from '@/components/useClientOnlyValue';
-
-// You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
-function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>['name'];
-  color: string;
-}) {
-  return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
-}
+import Icon from '@/src/components/icon.ui';
+import { useClientOnlyValue } from '@/src/components/useClientOnlyValue';
+import { useColorScheme } from '@/src/components/useColorScheme';
+import t from '@/src/shared/i18n/i18n';
+import Colors from '@/src/shared/styles/Colors';
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
+    const colorScheme = useColorScheme();
 
-  return (
-    <Tabs
-      screenOptions={{
+    const tabsConfig = {
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        // Disable the static render of the header on web
-        // to prevent a hydration error in React Navigation v6.
-        headerShown: useClientOnlyValue(false, true),
-      }}>
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Tab One',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          headerRight: () => (
-            <Link href="/modal" asChild>
-              <Pressable>
-                {({ pressed }) => (
-                  <FontAwesome
-                    name="info-circle"
-                    size={25}
-                    color={Colors[colorScheme ?? 'light'].text}
-                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-            </Link>
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="two"
-        options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-        }}
-      />
-    </Tabs>
-  );
+        headerShown: useClientOnlyValue(false, true)
+    };
+
+    return (
+        <Tabs screenOptions={{ ...tabsConfig }}>
+            <Tabs.Screen
+                name="feed"
+                options={{
+                    title: t('common.feed'),
+                    tabBarIcon: ({ color }) => (
+                        <Icon name="feed" color={color} />
+                    )
+                }}
+            />
+
+            <Tabs.Screen
+                name="identification"
+                options={{
+                    title: t('common.identification'),
+                    tabBarIcon: ({ color }) => (
+                        <Icon name="photo" color={color} />
+                    )
+                }}
+            />
+
+            <Tabs.Screen
+                name="profile"
+                options={{
+                    title: t('common.profile'),
+                    tabBarIcon: ({ color }) => (
+                        <Icon name="user" color={color} />
+                    )
+                }}
+            />
+        </Tabs>
+    );
 }
