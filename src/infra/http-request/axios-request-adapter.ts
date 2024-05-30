@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Axios, { AxiosInstance, AxiosRequestHeaders } from 'axios';
 
 import { HttpRequestParams, IHttpRequestPort } from './http-request-port';
@@ -15,14 +16,18 @@ class AxiosHttpRequest implements IHttpRequestPort {
     async get<T>({
         path,
         params,
-        withCredentials = true
+        withCredentials = true,
+        headers
     }: HttpRequestParams): Promise<T> {
         const { axiosInstance, url } = this._buildRequestConfig({
             path,
             params
         });
 
-        const response = await axiosInstance.get(url, { withCredentials });
+        const response = await axiosInstance.get(url, {
+            withCredentials,
+            headers
+        });
 
         return response.data;
     }
@@ -31,7 +36,8 @@ class AxiosHttpRequest implements IHttpRequestPort {
         path,
         params,
         body,
-        withCredentials = true
+        withCredentials = true,
+        headers
     }: HttpRequestParams): Promise<T> {
         const { axiosInstance, url } = this._buildRequestConfig({
             path,
@@ -39,7 +45,8 @@ class AxiosHttpRequest implements IHttpRequestPort {
         });
 
         const response = await axiosInstance.post(url, body, {
-            withCredentials
+            withCredentials,
+            headers
         });
 
         return response.data;
@@ -48,14 +55,18 @@ class AxiosHttpRequest implements IHttpRequestPort {
     async delete<T>({
         path,
         params,
-        withCredentials = true
+        withCredentials = true,
+        headers
     }: HttpRequestParams): Promise<T> {
         const { axiosInstance, url } = this._buildRequestConfig({
             path,
             params
         });
 
-        const response = await axiosInstance.delete(url, { withCredentials });
+        const response = await axiosInstance.delete(url, {
+            withCredentials,
+            headers
+        });
 
         return response.data;
     }
@@ -66,14 +77,21 @@ class AxiosHttpRequest implements IHttpRequestPort {
             headers
         });
 
+        client.interceptors.request.use(async (config) => {
+            const token = await AsyncStorage.getItem('userToken');
+            if (token) {
+                console.log(token);
+                config.headers.Authorization = `Bearer ${token}`;
+            }
+            return config;
+        });
+
         return client;
     }
 
     _getInstance(): AxiosInstance {
         if (!this.axiosInstance) {
-            this.axiosInstance = this._createClient({
-                headers: { 'Content-Type': 'multipart/form-data' }
-            });
+            this.axiosInstance = this._createClient({});
         }
 
         return this.axiosInstance;

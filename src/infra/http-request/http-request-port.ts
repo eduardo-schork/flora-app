@@ -5,6 +5,7 @@ export type HttpRequestParams = {
     body?: object;
     params?: object;
     withCredentials?: boolean;
+    headers?: object;
 };
 
 export interface IHttpRequestPort {

@@ -20,12 +20,12 @@ async function execute(imageUri?: string) {
 
         const response = await HttpRequestPort.post<TPrediction>({
             path: '/predict',
-            body: formData
+            body: formData,
+            headers: { 'Content-Type': 'multipart/form-data' }
         });
 
         return response;
     } catch (error) {
-        console.log(error?.message);
         console.warn({ error });
     }
 }
