@@ -1,9 +1,11 @@
 const PRIMARY_COLOR = '#FF8C00';
 const SECONDARY_COLOR = '#4A484F';
+const THIRD_COLOR = '#979797';
 
 const Colors = {
     primary: PRIMARY_COLOR,
     secondary: SECONDARY_COLOR,
+    third: THIRD_COLOR,
 
     white: 'white',
     gray: '#dadadb',

@@ -17,6 +17,14 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
     },
 
+    button: {
+        height: 60,
+        width: '100%',
+        backgroundColor: Colors.primary,
+        borderRadius: 6,
+        justifyContent: 'center'
+    },
+
     passwordContainer: {
         width: '100%',
         flexDirection: 'row',
@@ -34,14 +42,6 @@ const styles = StyleSheet.create({
         position: 'absolute',
         right: 10,
         padding: 10,
-    },
-
-    button: {
-        height: 60,
-        width: '100%',
-        backgroundColor: Colors.primary,
-        borderRadius: 6,
-        justifyContent: 'center'
     },
 
     textInput: {

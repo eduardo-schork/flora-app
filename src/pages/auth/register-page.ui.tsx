@@ -9,21 +9,23 @@ import {
     View
 } from 'react-native';
 
-import styles from './signin.styles';
+import styles from './register.styles';
 
 import CompanyBanner from '@/src/components/company-banner.ui';
 import t from '@/src/shared/i18n/i18n';
-import AuthSigninUsecase from '@/src/shared/usecase/auth-signin.usecase';
+import AuthRegisterUsecase from '@/src/shared/usecase/auth-register.usecase';
 import Icon from '@/src/components/icon.ui';
 
-function SignInPage({ ...props }) {
+function RegisterPage({ ...props }) {
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [passwordVisible, setPasswordVisible] = useState(false);
 
-    const onSignInPress = async () => {
+    const onRegisterPress = async () => {
         try {
-            const isUserLogged = await AuthSigninUsecase.execute(
+            const isUserLogged = await AuthRegisterUsecase.execute(
+                name,
                 email,
                 password
             );
@@ -35,10 +37,10 @@ function SignInPage({ ...props }) {
 
             throw new Error();
         } catch (error: any) {
-            Alert.alert('Login Error', error.message);
+            Alert.alert('Register Error', error.message);
         }
     };
-    
+
     function togglePasswordVisibility() {
         setPasswordVisible(!passwordVisible);
     }
@@ -50,6 +52,12 @@ function SignInPage({ ...props }) {
 
                 <TextInput
                     placeholder={t('auth.name')}
+                    style={styles.textInput}
+                    onChangeText={(text) => setName(text)}
+                />
+
+                <TextInput
+                    placeholder={t('auth.email')}
                     style={styles.textInput}
                     onChangeText={(text) => setEmail(text)}
                 />
@@ -69,9 +77,9 @@ function SignInPage({ ...props }) {
                     </TouchableOpacity>
                 </View>
 
-                <TouchableOpacity onPress={onSignInPress} style={styles.button}>
+                <TouchableOpacity onPress={onRegisterPress} style={styles.button}>
                     <Text style={styles.text}>
-                        {t('common.signIn').toUpperCase()}
+                        {t('common.confirm').toUpperCase()}
                     </Text>
                 </TouchableOpacity>
             </View>
@@ -79,4 +87,4 @@ function SignInPage({ ...props }) {
     );
 }
 
-export default SignInPage;
+export default RegisterPage;

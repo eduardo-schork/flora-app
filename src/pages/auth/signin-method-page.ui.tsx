@@ -26,6 +26,9 @@ function SigninMethodPage({ ...props }) {
     function onAnonymSignInPress() {
         // router.replace('/signin');
     }
+    function onRegisterPress() {
+        router.replace('/register');
+    }
 
     return (
         <SafeAreaView {...props} style={styles.pageContainer}>
@@ -47,6 +50,21 @@ function SigninMethodPage({ ...props }) {
                 >
                     <Text style={styles.text}>
                         {t('common.anonymAccess').toUpperCase()}
+                    </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    onPress={onRegisterPress}
+                    style={{
+                        ...styles.button,
+                        backgroundColor: 'transparent'
+                    }}
+                >
+                    <Text style={{
+                        ...styles.text,
+                        color: Colors.third
+                    }}>
+                        {t('common.register')}
                     </Text>
                 </TouchableOpacity>
             </View>

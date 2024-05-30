@@ -1,8 +1,8 @@
 import React from 'react';
-import { View } from 'react-native';
+import ProfilePage from '@/src/pages/auth/profile-page.ui';
 
 function Profile({ ...props }) {
-    return <View {...props} />;
+    return <ProfilePage {...props} />;
 }
 
 export default Profile;
