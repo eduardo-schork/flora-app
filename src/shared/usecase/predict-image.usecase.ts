@@ -1,3 +1,5 @@
+import mime from 'mime';
+
 import { TPrediction } from '../types/prediction.types';
 
 import HttpRequestPort from '@/src/infra/http-request/http-request-port';
@@ -11,7 +13,7 @@ async function execute(imageUri?: string) {
         const file: any = {
             uri: imageUri,
             name: 'image',
-            type: 'image/jpeg'
+            type: mime.getType(imageUri)
         };
 
         formData.append('image', file);
@@ -23,6 +25,7 @@ async function execute(imageUri?: string) {
 
         return response;
     } catch (error) {
+        console.log(error?.message);
         console.warn({ error });
     }
 }

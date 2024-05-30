@@ -2,7 +2,7 @@ import Axios, { AxiosInstance, AxiosRequestHeaders } from 'axios';
 
 import { HttpRequestParams, IHttpRequestPort } from './http-request-port';
 
-const API_BASE_URL = 'http://10.60.93.192:3000';
+const API_BASE_URL = 'http://192.168.4.12:3000';
 
 type CreateClientProps = {
     withCredentials?: boolean;
@@ -62,7 +62,8 @@ class AxiosHttpRequest implements IHttpRequestPort {
 
     _createClient({ headers }: CreateClientProps): AxiosInstance {
         const client = Axios.create({
-            baseURL: API_BASE_URL
+            baseURL: API_BASE_URL,
+            headers
         });
 
         return client;
@@ -70,7 +71,9 @@ class AxiosHttpRequest implements IHttpRequestPort {
 
     _getInstance(): AxiosInstance {
         if (!this.axiosInstance) {
-            this.axiosInstance = this._createClient({});
+            this.axiosInstance = this._createClient({
+                headers: { 'Content-Type': 'multipart/form-data' }
+            });
         }
 
         return this.axiosInstance;
