@@ -14,15 +14,17 @@ type TPredictPictureScreenProps = {
     pictureData?: TPictureData;
     predictionResponse?: TPrediction;
     onPressTryAgain: () => void;
+    selectedModel: string;
 };
 
 function PredictPictureScreen({
+    selectedModel,
     pictureData,
     predictionResponse,
     onPressTryAgain,
     ...props
 }: TPredictPictureScreenProps) {
-    const predictionData = predictionResponse?.['inceptionv3'];
+    const predictionData = predictionResponse?.[selectedModel];
 
     return (
         <View style={styles.container} {...props}>
@@ -38,7 +40,10 @@ function PredictPictureScreen({
                 {!predictionResponse ? (
                     <ActivityIndicator />
                 ) : (
-                    <PredictionResponse prediction={predictionData} />
+                    <PredictionResponse
+                        selectedModel={selectedModel}
+                        prediction={predictionData}
+                    />
                 )}
             </View>
 

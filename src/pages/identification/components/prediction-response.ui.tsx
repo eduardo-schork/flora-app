@@ -9,8 +9,10 @@ import { TFruitPrediction } from '@/src/shared/types/prediction.types';
 
 function PredictionResponse({
     prediction,
+    selectedModel,
     ...props
 }: {
+    selectedModel: string;
     prediction?: TFruitPrediction;
 }) {
     const predominantClass = prediction?.predominantClass || '';

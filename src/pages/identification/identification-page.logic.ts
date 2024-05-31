@@ -10,12 +10,17 @@ export type TPictureData = {
 };
 
 const useIdentificationPageLogic = () => {
+    const [selectedModel, setSelectedModel] = useState<string>('');
     const [pictureData, setPictureData] = useState<TPictureData>();
     const [predictionResponse, setPredictionResponse] = useState<TPrediction>();
 
     function onPressTryAgain() {
         setPictureData(undefined);
         setPredictionResponse(undefined);
+    }
+
+    function onChangeSelectedModel(newModel: string) {
+        setSelectedModel(newModel);
     }
 
     async function openImagePicker() {
@@ -53,10 +58,12 @@ const useIdentificationPageLogic = () => {
 
     return {
         pictureData,
-        predictionResponse,
+        selectedModel,
         openImagePicker,
+        onPressTryAgain,
+        predictionResponse,
         sendImageToPredict,
-        onPressTryAgain
+        onChangeSelectedModel
     };
 };
 

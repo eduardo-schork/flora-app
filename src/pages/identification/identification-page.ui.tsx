@@ -4,10 +4,12 @@ import SelectPictureScreen from './select-picture-screen.ui';
 
 function IdentificationPage({ ...props }) {
     const {
+        pictureData,
+        selectedModel,
         openImagePicker,
-        predictionResponse,
         onPressTryAgain,
-        pictureData
+        predictionResponse,
+        onChangeSelectedModel
     } = useIdentificationPageLogic();
 
     if (pictureData) {
@@ -15,13 +17,19 @@ function IdentificationPage({ ...props }) {
             <PredictPictureScreen
                 {...props}
                 pictureData={pictureData}
+                selectedModel={selectedModel}
                 onPressTryAgain={onPressTryAgain}
                 predictionResponse={predictionResponse}
             />
         );
     }
 
-    return <SelectPictureScreen openImagePicker={openImagePicker} />;
+    return (
+        <SelectPictureScreen
+            openImagePicker={openImagePicker}
+            onChangeSelectedModel={onChangeSelectedModel}
+        />
+    );
 }
 
 export default IdentificationPage;

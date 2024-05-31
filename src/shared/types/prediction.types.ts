@@ -4,8 +4,4 @@ export type TFruitPrediction = {
     predominantClass: string;
 };
 
-export type TPrediction = {
-    convnet: TFruitPrediction;
-    inceptionv3: TFruitPrediction;
-    vgg16: TFruitPrediction;
-};
+export type TPrediction = Record<string, TFruitPrediction>;
