@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
         padding: 6,
         borderRadius: 10,
         backgroundColor: Colors.gray,
+        marginBottom: -15,
 
         display: 'flex',
         alignSelf: 'center',

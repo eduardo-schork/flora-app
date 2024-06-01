@@ -1,10 +1,8 @@
-import React from 'react';
-import { ActivityIndicator, Button, Image, View } from 'react-native';
-
+import React, { useState } from 'react';
+import { ActivityIndicator, Button, Image, View, Alert, Modal, Text, TouchableOpacity } from 'react-native';
 import PredictionResponse from './components/prediction-response.ui';
 import { TPictureData } from './identification-page.logic';
 import { styles } from './identification-page.styles';
-
 import Divider from '@/src/components/divider.ui';
 import t from '@/src/shared/i18n/i18n';
 import Colors from '@/src/shared/styles/Colors';
@@ -14,17 +12,49 @@ type TPredictPictureScreenProps = {
     pictureData?: TPictureData;
     predictionResponse?: TPrediction;
     onPressTryAgain: () => void;
+    postImage: () => void;
+    saveFruitSelection: (fruit: string) => void;
     selectedModel: string;
 };
 
 function PredictPictureScreen({
-    selectedModel,
     pictureData,
     predictionResponse,
     onPressTryAgain,
+    postImage,
+    saveFruitSelection,
+    selectedModel,
     ...props
 }: TPredictPictureScreenProps) {
-    const predictionData = predictionResponse?.[selectedModel];
+    const [modalVisible, setModalVisible] = useState(false);
+    const [buttonsVisible, setButtonsVisible] = useState(true);
+    const predictionData = predictionResponse?.['inceptionv3'];
+
+    const handleConfirm = () => {
+        Alert.alert(
+            t('picture.invalidate'),
+            t('picture.postQuestion'),
+            [
+                {
+                    text: t('common.cancel'),
+                    style: "cancel"
+                },
+                { text: t('picture.post'), onPress: () => postImage() }
+            ],
+            { cancelable: false }
+        );
+        setButtonsVisible(false);
+    };
+
+    const handleDisagree = () => {
+        setModalVisible(true);
+    };
+
+    const handleFruitSelection = (fruit: string) => {
+        saveFruitSelection(fruit);
+        setModalVisible(false);
+        setButtonsVisible(false);
+    };
 
     return (
         <View style={styles.container} {...props}>
@@ -33,34 +63,52 @@ function PredictPictureScreen({
                 source={{ uri: pictureData?.uri }}
                 style={styles.selectedPictureImage}
             />
-
             <Divider />
-
-            <View style={{ flex: 1 }}>
+            <View style={styles.predictionResponseContainer}>
                 {!predictionResponse ? (
                     <ActivityIndicator />
                 ) : (
                     <PredictionResponse
-                        selectedModel={selectedModel}
                         prediction={predictionData}
+                        selectedModel={selectedModel}
                     />
                 )}
             </View>
-
-            {predictionResponse ? (
+            {predictionResponse && buttonsVisible ? (
                 <>
-                    <View style={{ flexDirection: 'row' }}>
-                        <Button title="Confirmar" />
-                        <Button title="Discordar" />
+                    <View style={styles.buttonsContainer}>
+                        <Button title={t('picture.confirm')} onPress={handleConfirm} />
+                        <Button title={t('picture.deny')} onPress={handleDisagree} />
                     </View>
-
-                    <Button
-                        color={Colors.primary}
-                        onPress={onPressTryAgain}
-                        title={t('common.sendNewImage')}
-                    />
                 </>
             ) : null}
+            <Button
+                color={Colors.primary}
+                onPress={onPressTryAgain}
+                title={t('common.sendNewImage')}
+            />
+            <Modal
+                transparent={true}
+                animationType="slide"
+                visible={modalVisible}
+                onRequestClose={() => setModalVisible(false)}
+            >
+                <View style={styles.modalContainer}>
+                    <View style={styles.modalContent}>
+                        <Text style={styles.modalTitle}>{t('picture.fruit')}</Text>
+                        {['Morango', 'Pêssego', 'Romã', 'Nenhuma'].map(fruit => (
+                            <TouchableOpacity
+                                key={fruit}
+                                style={styles.modalButton}
+                                onPress={() => handleFruitSelection(fruit)}
+                            >
+                                <Text style={styles.modalButtonText}>{fruit}</Text>
+                            </TouchableOpacity>
+                        ))}
+                        <Button title={t('common.cancel')} onPress={() => setModalVisible(false)} />
+                    </View>
+                </View>
+            </Modal>
         </View>
     );
 }

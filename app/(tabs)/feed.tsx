@@ -1,8 +1,9 @@
 import React from 'react';
-import { View } from 'react-native';
+
+import FeedPage from '@/src/pages/feed/feed-page.ui';
 
 function Feed({ ...props }) {
-    return <View {...props} />;
+    return <FeedPage {...props} />;
 }
 
 export default Feed;

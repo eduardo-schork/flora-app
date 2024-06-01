@@ -9,7 +9,9 @@ function IdentificationPage({ ...props }) {
         openImagePicker,
         onPressTryAgain,
         predictionResponse,
-        onChangeSelectedModel
+        onChangeSelectedModel,
+        saveFruitSelection,
+        postImage
     } = useIdentificationPageLogic();
 
     if (pictureData) {
@@ -20,6 +22,8 @@ function IdentificationPage({ ...props }) {
                 selectedModel={selectedModel}
                 onPressTryAgain={onPressTryAgain}
                 predictionResponse={predictionResponse}
+                postImage={postImage}
+                saveFruitSelection={saveFruitSelection}
             />
         );
     }
