@@ -5,6 +5,7 @@ import { TPrediction } from '@/src/shared/types/prediction.types';
 import PredictImageUsecase from '@/src/shared/usecase/predict-image.usecase';
 import axios from 'axios';
 import AxiosRequestAdapter from '@/src/infra/http-request/axios-request-adapter';
+import HttpRequestPort from '@/src/infra/http-request/http-request-port';
 
 export type TPictureData = {
     uri: string;
@@ -72,40 +73,27 @@ const useIdentificationPageLogic = () => {
 
             formData.append('image', imageBlob, 'photo.jpg');
 
-            // Adicione outros campos necessários para a sua rota
             formData.append('user_id', 'seu_user_id');
             formData.append('predicted_percentage', '');
             formData.append('predicted_class', '');
-            formData.append('feedback_class', selectedFruit || ''); // Selecione a fruta ou vazio se não houver seleção
+            formData.append('feedback_class', selectedFruit || '');
             formData.append('model_type', selectedModel);
 
-            // Configure os headers necessários, se houver
-            const headers = {
-                'Content-Type': 'multipart/form-data',
-            };
-
-            // Faça a solicitação usando AxiosRequestAdapter
-            const response = await AxiosRequestAdapter.post({
+            const response = await HttpRequestPort.post({
                 path: '/post-feed',
                 body: formData,
-                headers,
+                headers: { 'Content-Type': 'multipart/form-data' }
             });
 
-            if (response.status === 201) {
-                console.log('Imagem postada com sucesso');
-                // Você pode lidar com a resposta daqui, se necessário
-            }
+            console.log(response)
         } catch (error) {
             console.error('Erro ao postar a imagem:', error);
-            // Lide com o erro aqui
         }
     }
-
 
     function saveFruitSelection(fruit: string) {
         setSelectedFruit(fruit);
         console.log(`Fruta selecionada: ${fruit}`);
-        // Aqui você pode adicionar lógica adicional para lidar com a seleção da fruta
     }
 
     return {
