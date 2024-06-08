@@ -23,7 +23,10 @@ function PredictionResponse({
     return (
         <View {...props} style={{ flex: 1, gap: 20 }}>
             <Text style={styles.text}>
-                {t('identification.predictResponse', predominantClassFormatted)}
+                {t('identification.predictResponse')}{' '}
+                <Text style={{ color: 'orange' }}>
+                    {predominantClassFormatted}
+                </Text>
             </Text>
 
             <PredictedFruitDetails

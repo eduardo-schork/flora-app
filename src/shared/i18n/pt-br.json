@@ -14,9 +14,10 @@
     "auth.name": "Nome",
     "auth.email": "Email",
     "auth.password": "Senha",
-    "identification.selectMethod": "Selecione o método para identificação",
-    "identification.predictResponse": "Está fruta é uma espécie de: $1",
-    "identification.predictionPercentage": "Probabilidade de ser a espécie certa: $1%",
+    "identification.selectMethod": "SELECIONE A IMAGEM E O MODELO",
+    "identification.trainingModels": "Modelos de treinamento",
+    "identification.predictResponse": "Esta fruta é uma espécie de: ",
+    "identification.predictionPercentage": "Probabilidade de ser a espécie certa:",
     "picture.validate": "Validar",
     "picture.invalidate": "Invalidar",
     "picture.specie": "Espécie: ",
@@ -24,5 +25,5 @@
     "picture.deny": "Discordar",
     "picture.postQuestion": "Você deseja postar a foto no feed?",
     "picture.post": "Postar",
-    "picture.fruit": "Escolha uma fruta"
+    "picture.fruit": "Qual é a fruta?"
 }

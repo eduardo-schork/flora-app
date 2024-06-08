@@ -18,18 +18,6 @@ const FeedPage = () => {
                     <View style={styles.label}>
                         <Text style={styles.labelText}>70%</Text>
                     </View>
-                    <View style={styles.buttonContainer}>
-                        <TouchableOpacity style={[styles.button, styles.validateButton]}>
-                            <Text style={styles.buttonText}>
-                                {t('picture.validate')}
-                            </Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={[styles.button, styles.invalidateButton]}>
-                            <Text style={styles.buttonText}>
-                                {t('picture.invalidate')}
-                            </Text>
-                        </TouchableOpacity>
-                    </View>
                 </View>
             ))}
         </ScrollView>

@@ -77,16 +77,21 @@ function PredictPictureScreen({
             {predictionResponse && buttonsVisible ? (
                 <>
                     <View style={styles.buttonsContainer}>
-                        <Button title={t('picture.confirm')} onPress={handleConfirm} />
-                        <Button title={t('picture.deny')} onPress={handleDisagree} />
+                        <TouchableOpacity style={styles.confirmButton} onPress={handleConfirm}>
+                            <Text style={styles.buttonText}>{t('picture.confirm')}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.denyButton} onPress={handleDisagree}>
+                            <Text style={styles.buttonText}>{t('picture.deny')}</Text>
+                        </TouchableOpacity>
                     </View>
+                    <View style={{ marginBottom: -75 }} />
                 </>
             ) : null}
-            <Button
-                color={Colors.primary}
-                onPress={onPressTryAgain}
-                title={t('common.sendNewImage')}
-            />
+            <View>
+                <TouchableOpacity style={styles.sendNewImage} onPress={onPressTryAgain}>
+                    <Text style={styles.buttonText}>{t('common.sendNewImage')}</Text>
+                </TouchableOpacity>
+            </View>
             <Modal
                 transparent={true}
                 animationType="slide"
@@ -105,7 +110,12 @@ function PredictPictureScreen({
                                 <Text style={styles.modalButtonText}>{fruit}</Text>
                             </TouchableOpacity>
                         ))}
-                        <Button title={t('common.cancel')} onPress={() => setModalVisible(false)} />
+
+                        <View>
+                            <TouchableOpacity style={styles.cancelButton} onPress={() => setModalVisible(false)}>
+                                <Text style={styles.modalButtonText}>{t('common.cancel')}</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </View>
             </Modal>

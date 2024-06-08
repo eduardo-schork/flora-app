@@ -24,7 +24,7 @@ function SelectPictureScreen({
 }) {
     return (
         <View style={styles.container} {...props}>
-            <Text style={styles.text}>{t('identification.selectMethod')}</Text>
+            <Text style={styles.textIdentification}>{t('identification.selectMethod')}</Text>
 
             <View style={styles.methodsContainer}>
                 <TouchableOpacity style={styles.actionButton}>
@@ -38,12 +38,13 @@ function SelectPictureScreen({
                     <Icon name="upload" size={60} color={Colors.primary} />
                 </TouchableOpacity>
             </View>
-
+            
             <SelectList
                 save="value"
                 data={AVALIABLE_MODELS}
                 setSelected={onChangeSelectedModel}
-                dropdownStyles={{ borderColor: Colors.primary }}
+                placeholder={t('identification.trainingModels')}
+                dropdownStyles={{ borderColor: Colors.primary, maxHeight: 130 }} 
                 boxStyles={{ width: '80%', borderColor: Colors.primary }}
             />
         </View>

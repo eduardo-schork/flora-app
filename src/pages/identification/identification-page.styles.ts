@@ -20,6 +20,12 @@ export const styles = StyleSheet.create({
     text: {
         fontSize: 20,
         alignSelf: 'center',
+        color: Colors.fourth,
+        textAlign: 'center',
+    },
+    textIdentification: {
+        fontSize: 20,
+        alignSelf: 'center',
         color: Colors.primary
     },
 
@@ -65,10 +71,52 @@ export const styles = StyleSheet.create({
         color: Colors.white,
         fontSize: 16
     },
+    buttonText: {
+        color: Colors.white,
+        fontSize: 16,
+        fontWeight: 'bold',
+        paddingVertical: 10,
+        borderRadius: 8,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
     buttonsContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginBottom: -30
+    },
+    confirmButton: {
+        flex: 1,
+        backgroundColor: '#45B742', 
+        borderRadius: 20,
+        marginHorizontal: 10, 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        minWidth: 150, 
+    },
+    denyButton: {
+        flex: 1,
+        backgroundColor: '#FF0000', 
+        borderRadius: 20, 
+        marginHorizontal: 10, 
+        justifyContent: 'center',
+        alignItems: 'center',
+        minWidth: 150, 
+    },
+    sendNewImage: {
+        backgroundColor: Colors.primary, 
+        borderRadius: 20, 
+        justifyContent: 'center',
+        alignItems: 'center',
+        minWidth: 200, 
+        marginBottom: 35
+    },
+    cancelButton: {
+        padding: 10,
+        marginVertical: 5,
+        backgroundColor: '#CCCCCC', 
+        borderRadius: 5,
+        width: '100%',
+        alignItems: 'center'
     },
     predictionResponseContainer: {
         flex: 1,

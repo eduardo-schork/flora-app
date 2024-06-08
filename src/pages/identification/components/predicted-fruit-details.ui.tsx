@@ -16,6 +16,9 @@ function PredictedFruitDetails({
 
     return (
         <>
+            <Text style={styles.text}>
+                {t('identification.predictionPercentage')}
+            </Text>
             <View style={styles.predictedClassContainer} {...props}>
                 <Image
                     style={styles.predictedFruitImage}
@@ -26,9 +29,7 @@ function PredictedFruitDetails({
                 </Text>
             </View>
 
-            <Text style={{ alignSelf: 'center' }}>
-                {t('identification.predictionPercentage', percentage)}
-            </Text>
+
         </>
     );
 }
@@ -38,6 +39,12 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         alignSelf: 'center',
         color: Colors.secondary
+    },
+
+    text: {
+        fontSize: 20,
+        alignSelf: 'center',
+        color: Colors.fourth,
     },
 
     predictedFruitImage: {
