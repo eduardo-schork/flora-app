@@ -80,7 +80,7 @@ export default function TabLayout() {
                 options={{
                     title: t('common.identification'),
                     tabBarIcon: ({ color }: { color: string }) => (
-                        <Icon name="feed" color={color} />
+                        <Icon name="photo" color={color} />
                     )
                 }}
             />
@@ -91,7 +91,7 @@ export default function TabLayout() {
                     options={{
                         title: t('common.profile'),
                         tabBarIcon: ({ color }: { color: string }) => (
-                            <Icon name="feed" color={color} />
+                            <Icon name="user" color={color} />
                         )
                     }}
                 />
