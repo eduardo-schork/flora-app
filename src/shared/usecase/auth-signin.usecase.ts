@@ -26,16 +26,12 @@ async function execute(email: string, password: string) {
 }
 
 async function executeAnonym() {
-    
     try {
-        const response: { token: string } = await HttpRequestPort.post({
+        const response = await HttpRequestPort.post({
             path: '/anonymSign',
         });
 
         if (!response) throw new Error();
-
-        await AsyncStorage.setItem('userToken', response?.token.toString());
-
         return true;
     } catch (error) {
         console.warn({ error });

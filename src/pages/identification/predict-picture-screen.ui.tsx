@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, Button, Image, View, Alert, Modal, Text, TouchableOpacity } from 'react-native';
 import PredictionResponse from './components/prediction-response.ui';
 import { TPictureData } from './identification-page.logic';
@@ -7,6 +7,7 @@ import Divider from '@/src/components/divider.ui';
 import t from '@/src/shared/i18n/i18n';
 import Colors from '@/src/shared/styles/Colors';
 import { TPrediction } from '@/src/shared/types/prediction.types';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type TPredictPictureScreenProps = {
     pictureData?: TPictureData;
@@ -29,7 +30,19 @@ function PredictPictureScreen({
     const [modalVisible, setModalVisible] = useState(false);
     const [buttonsVisible, setButtonsVisible] = useState(true);
     const predictionData = predictionResponse?.['inceptionv3'];
+    const [isAnonymous, setIsAnonymous] = useState<boolean>(false);
 
+    useEffect(() => {
+        async function checkLoginStatus() {
+            const token = await AsyncStorage.getItem('userToken');
+            if (!token) {
+                setIsAnonymous(true);
+            }
+        }
+
+        checkLoginStatus();
+    }, []);
+    
     const handleConfirm = () => {
         Alert.alert(
             t('picture.invalidate'),
@@ -74,7 +87,7 @@ function PredictPictureScreen({
                     />
                 )}
             </View>
-            {predictionResponse && buttonsVisible ? (
+            {predictionResponse && buttonsVisible && !isAnonymous ? (
                 <>
                     <View style={styles.buttonsContainer}>
                         <TouchableOpacity style={styles.confirmButton} onPress={handleConfirm}>

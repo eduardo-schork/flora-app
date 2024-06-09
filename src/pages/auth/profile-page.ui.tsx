@@ -33,8 +33,7 @@ function ProfilePage({ ...props }) {
         const fetchUserData = async () => {
             try {
                 const token = await AsyncStorage.getItem('userToken');
-                if (!token) throw new Error('User not logged in');
-
+                
                 const response: UserResponse = await HttpRequestPort.post({
                     path: '/secure-endpoint',
                     headers: {
