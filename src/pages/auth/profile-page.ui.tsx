@@ -75,7 +75,7 @@ function ProfilePage({ ...props }) {
                 {userData && (
                     <>
                         <View style={styles.inputContainer}>
-                            <Text style={styles.label}>Name</Text>
+                            <Text style={styles.label}>Nome</Text>
                             <TextInput
                                 style={styles.textInput}
                                 value={userData.name}

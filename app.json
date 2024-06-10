@@ -50,11 +50,7 @@
     "extra": {
       "router": {
         "origin": false
-      },
-      "eas": {
-        "projectId": "bab3064a-8cb0-4cdc-bc44-03b193b5ada3"
       }
-    },
-    "owner": "eduardo-schork"
+    }
   }
 }
