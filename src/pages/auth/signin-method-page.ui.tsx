@@ -1,6 +1,12 @@
 import { router } from 'expo-router';
 import React, { useEffect } from 'react';
-import { Alert, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
+import {
+    Alert,
+    SafeAreaView,
+    Text,
+    TouchableOpacity,
+    View
+} from 'react-native';
 
 import styles from './signin.styles';
 
@@ -8,7 +14,6 @@ import CompanyBanner from '@/src/components/company-banner.ui';
 import t from '@/src/shared/i18n/i18n';
 import Colors from '@/src/shared/styles/Colors';
 import AuthSigninUsecase from '@/src/shared/usecase/auth-signin.usecase';
-import AuthRegisterUsecase from '@/src/shared/usecase/auth-register.usecase';
 
 function SigninMethodPage({ ...props }) {
     useEffect(() => {
@@ -26,20 +31,19 @@ function SigninMethodPage({ ...props }) {
 
     async function onAnonymSignInPress() {
         try {
-            const isUserLogged = await AuthSigninUsecase.executeAnonym(
-            );
+            const isUserLogged = await AuthSigninUsecase.executeAnonym();
 
             if (isUserLogged) {
                 router.replace('/(tabs)/identification');
                 return;
             }
 
-            throw new Error();
+            throw new Error('Ocorreu um erro ao entrar, tente novamente!');
         } catch (error: any) {
             Alert.alert('Login Error', error.message);
         }
     }
-    
+
     function onRegisterPress() {
         router.replace('/register');
     }
@@ -74,10 +78,12 @@ function SigninMethodPage({ ...props }) {
                         backgroundColor: 'transparent'
                     }}
                 >
-                    <Text style={{
-                        ...styles.text,
-                        color: Colors.third
-                    }}>
+                    <Text
+                        style={{
+                            ...styles.text,
+                            color: Colors.third
+                        }}
+                    >
                         {t('common.register')}
                     </Text>
                 </TouchableOpacity>

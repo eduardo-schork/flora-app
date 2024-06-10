@@ -34,15 +34,17 @@ export default function TabLayout() {
 
     return (
         <Tabs screenOptions={{ ...tabsConfig }}>
-            <Screen
-                name="feed"
-                options={{
-                    title: t('common.feed'),
-                    tabBarIcon: ({ color }: { color: string }) => (
-                        <Icon name="feed" color={color} />
-                    )
-                }}
-            />
+            {isAnonymous ? (
+                <Screen
+                    name="feed"
+                    options={{
+                        title: t('common.feed'),
+                        tabBarIcon: ({ color }: { color: string }) => (
+                            <Icon name="feed" color={color} />
+                        )
+                    }}
+                />
+            ) : null}
 
             <Screen
                 name="identification"
@@ -54,15 +56,17 @@ export default function TabLayout() {
                 }}
             />
 
-            <Screen
-                name="profile"
-                options={{
-                    title: t('common.profile'),
-                    tabBarIcon: ({ color }: { color: string }) => (
-                        <Icon name="user" color={color} />
-                    )
-                }}
-            />
+            {isAnonymous ? (
+                <Screen
+                    name="profile"
+                    options={{
+                        title: t('common.profile'),
+                        tabBarIcon: ({ color }: { color: string }) => (
+                            <Icon name="user" color={color} />
+                        )
+                    }}
+                />
+            ) : null}
         </Tabs>
     );
 }
