@@ -16,7 +16,7 @@
     "auth.password": "Senha",
     "identification.selectMethod": "SELECIONE A IMAGEM E O MODELO",
     "identification.trainingModels": "Modelos de treinamento",
-    "identification.predictResponse": "Esta fruta é uma espécie de: ",
+    "identification.predictResponse": "Esta fruta é uma espécie: ",
     "identification.predictionPercentage": "Probabilidade de ser a espécie certa:",
     "picture.validate": "Validar",
     "picture.invalidate": "Invalidar",

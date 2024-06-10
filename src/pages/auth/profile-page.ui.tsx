@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
 import React, { useState, useEffect } from 'react';
 import {
@@ -8,12 +9,13 @@ import {
     TouchableOpacity,
     View
 } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import styles from './profile.styles';
+
 import CompanyBanner from '@/src/components/company-banner.ui';
+import HttpRequestPort from '@/src/infra/http-request/http-request-port';
 import t from '@/src/shared/i18n/i18n';
 import AuthProfileUsecase from '@/src/shared/usecase/auth-profile.usecase';
-import HttpRequestPort from '@/src/infra/http-request/http-request-port';
 
 interface User {
     name: string;
@@ -33,11 +35,11 @@ function ProfilePage({ ...props }) {
         const fetchUserData = async () => {
             try {
                 const token = await AsyncStorage.getItem('userToken');
-                
+
                 const response: UserResponse = await HttpRequestPort.post({
                     path: '/secure-endpoint',
                     headers: {
-                        'Authorization': `Bearer ${token}`
+                        Authorization: `Bearer ${token}`
                     }
                 });
 
@@ -48,7 +50,7 @@ function ProfilePage({ ...props }) {
                 }
             } catch (error: any) {
                 Alert.alert('Error', error.message);
-            } 
+            }
         };
 
         fetchUserData();
@@ -91,7 +93,10 @@ function ProfilePage({ ...props }) {
                     </>
                 )}
 
-                <TouchableOpacity onPress={onProfilePress} style={styles.button}>
+                <TouchableOpacity
+                    onPress={onProfilePress}
+                    style={styles.button}
+                >
                     <Text style={styles.text}>
                         {t('common.logoff').toUpperCase()}
                     </Text>

@@ -3,7 +3,7 @@ import Axios, { AxiosInstance, AxiosRequestHeaders } from 'axios';
 
 import { HttpRequestParams, IHttpRequestPort } from './http-request-port';
 
-const API_BASE_URL = 'http://192.168.1.13:3000';
+const API_BASE_URL = 'http://192.168.4.12:3000';
 
 type CreateClientProps = {
     withCredentials?: boolean;
@@ -80,7 +80,6 @@ class AxiosHttpRequest implements IHttpRequestPort {
         client.interceptors.request.use(async (config) => {
             const token = await AsyncStorage.getItem('userToken');
             if (token) {
-                console.log(token);
                 config.headers.Authorization = `Bearer ${token}`;
             }
             return config;

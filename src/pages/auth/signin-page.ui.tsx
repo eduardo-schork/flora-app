@@ -12,9 +12,9 @@ import {
 import styles from './signin.styles';
 
 import CompanyBanner from '@/src/components/company-banner.ui';
+import Icon from '@/src/components/icon.ui';
 import t from '@/src/shared/i18n/i18n';
 import AuthSigninUsecase from '@/src/shared/usecase/auth-signin.usecase';
-import Icon from '@/src/components/icon.ui';
 
 function SignInPage({ ...props }) {
     const [email, setEmail] = useState('');
@@ -33,12 +33,12 @@ function SignInPage({ ...props }) {
                 return;
             }
 
-            throw new Error();
+            throw new Error('Ocorreu um erro ao fazer login, tente novamente.');
         } catch (error: any) {
             Alert.alert('Login Error', error.message);
         }
     };
-    
+
     function togglePasswordVisibility() {
         setPasswordVisible(!passwordVisible);
     }
@@ -61,7 +61,10 @@ function SignInPage({ ...props }) {
                         secureTextEntry={!passwordVisible}
                         onChangeText={(text) => setPassword(text)}
                     />
-                    <TouchableOpacity onPress={togglePasswordVisibility} style={styles.icon}>
+                    <TouchableOpacity
+                        onPress={togglePasswordVisibility}
+                        style={styles.icon}
+                    >
                         <Icon
                             name={passwordVisible ? 'eye' : 'eye-slash'}
                             size={20}

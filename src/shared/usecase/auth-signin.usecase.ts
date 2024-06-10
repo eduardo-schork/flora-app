@@ -28,7 +28,7 @@ async function execute(email: string, password: string) {
 async function executeAnonym() {
     try {
         const response = await HttpRequestPort.post({
-            path: '/anonymSign',
+            path: '/anonymSign'
         });
 
         if (!response) throw new Error();

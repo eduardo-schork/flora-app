@@ -1,11 +1,11 @@
 import * as ImagePicker from 'expo-image-picker';
-import { useState } from 'react';
+import mime, { Mime } from 'mime';
+import { useCallback, useState } from 'react';
 
+import HttpRequestPort from '@/src/infra/http-request/http-request-port';
+import ToastAdapter from '@/src/infra/toast.adapter';
 import { TPrediction } from '@/src/shared/types/prediction.types';
 import PredictImageUsecase from '@/src/shared/usecase/predict-image.usecase';
-import axios from 'axios';
-import AxiosRequestAdapter from '@/src/infra/http-request/axios-request-adapter';
-import HttpRequestPort from '@/src/infra/http-request/http-request-port';
 
 export type TPictureData = {
     uri: string;
@@ -61,39 +61,49 @@ const useIdentificationPageLogic = () => {
         setPredictionResponse(response);
     }
 
-    async function postImage() {
+    const postImage = async () => {
         try {
-            if (!pictureData) {
-                console.log("Nenhuma imagem selecionada.");
-                return;
-            }
+            const uri = pictureData?.uri;
+
+            const predominantClass =
+                predictionResponse?.[selectedModel].predominantClass;
+
+            const predictionAssurance =
+                predictionResponse?.[selectedModel].percentages?.[
+                    predominantClass
+                ];
 
             const formData = new FormData();
-            const imageBlob = await fetch(pictureData.uri).then((res) => res.blob());
 
-            formData.append('image', imageBlob, 'photo.jpg');
+            const file: any = {
+                uri,
+                name: 'image',
+                type: mime.getType(uri)
+            };
 
-            formData.append('user_id', 'seu_user_id');
-            formData.append('predicted_percentage', '');
-            formData.append('predicted_class', '');
-            formData.append('feedback_class', selectedFruit || '');
+            formData.append('image', file);
+            formData.append('feedback_class', selectedFruit);
+            formData.append('predicted_class', predominantClass);
+            formData.append('predicted_percentage', predictionAssurance);
             formData.append('model_type', selectedModel);
 
-            const response = await HttpRequestPort.post({
+            await HttpRequestPort.post({
                 path: '/post-feed',
                 body: formData,
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
 
-            console.log(response)
+            ToastAdapter.show('Postagem feita com successo!');
         } catch (error) {
             console.error('Erro ao postar a imagem:', error);
+            ToastAdapter.show(
+                'Não foi possível realizar a postagem, tente novamente.'
+            );
         }
-    }
+    };
 
     function saveFruitSelection(fruit: string) {
         setSelectedFruit(fruit);
-        console.log(`Fruta selecionada: ${fruit}`);
     }
 
     return {

@@ -1,26 +1,70 @@
-import React from 'react';
-import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
+import React, { useEffect, useState, useCallback } from 'react';
+import { View, Text, Image, FlatList, RefreshControl } from 'react-native';
+
 import styles from './feed-page.styles';
-import t from '@/src/shared/i18n/i18n';
+
+import Divider from '@/src/components/divider.ui';
+import { PREDICTION_CLASS_NAME } from '@/src/shared/constants/prediction-class.const';
+import FindFeedPostsUsecase from '@/src/shared/usecase/find-feed-posts.usecase';
 
 const FeedPage = () => {
-    const mockImages = [
-        'https://via.placeholder.com/300.png?text=Fruta+1',
-        'https://via.placeholder.com/300.png?text=Fruta+2',
-        'https://via.placeholder.com/300.png?text=Fruta+3',
-    ];
+    const [postsList, setPostsList] = useState<any>([]);
+    const [refreshing, setRefreshing] = useState(false);
+
+    const fetchPosts = async () => {
+        const postsData: any = await FindFeedPostsUsecase.execute();
+        setPostsList(postsData);
+    };
+
+    useEffect(() => {
+        fetchPosts();
+    }, []);
+
+    const onRefresh = useCallback(() => {
+        setRefreshing(true);
+        fetchPosts().then(() => setRefreshing(false));
+    }, []);
+
+    // TODO atomize
+    const renderItem = ({ item, index }: { item: any; index: number }) => (
+        <View key={index} style={styles.card}>
+            <View style={styles.imageContainer}>
+                <Image source={{ uri: item?.image_url }} style={styles.image} />
+                <View style={styles.label}>
+                    <Text style={styles.labelText}>
+                        {item?.predicted_percentage}%
+                    </Text>
+                </View>
+                <View style={styles.modelLabel}>
+                    <Text style={styles.labelText}>{item?.model_type}</Text>
+                </View>
+            </View>
+
+            <Divider orientation="horizontal" />
+
+            <View style={styles.infoContainer}>
+                <Text style={styles.predictedText}>
+                    Classe predita:{' '}
+                    {PREDICTION_CLASS_NAME[item?.predicted_class]}
+                </Text>
+                <Text style={styles.correctText}>
+                    Classe correta:{' '}
+                    {PREDICTION_CLASS_NAME[item?.feedback_class]}
+                </Text>
+            </View>
+        </View>
+    );
 
     return (
-        <ScrollView style={styles.container} contentContainerStyle={{ alignItems: 'center' }}>
-            {mockImages.map((imageUri, index) => (
-                <View key={index} style={styles.card}>
-                    <Image source={{ uri: imageUri }} style={styles.image} />
-                    <View style={styles.label}>
-                        <Text style={styles.labelText}>70%</Text>
-                    </View>
-                </View>
-            ))}
-        </ScrollView>
+        <FlatList
+            data={postsList}
+            renderItem={renderItem}
+            keyExtractor={(item, index) => index.toString()}
+            style={styles.flatList}
+            refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+        />
     );
 };
 

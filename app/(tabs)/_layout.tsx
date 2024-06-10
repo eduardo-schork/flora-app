@@ -1,8 +1,7 @@
-import { Tabs, router} from 'expo-router';
-import React, { useState, useEffect } from 'react';
-import { Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Tabs } from 'expo-router';
 import { Screen } from 'expo-router/build/views/Screen';
+import React, { useState, useEffect } from 'react';
 
 import Icon from '@/src/components/icon.ui';
 import { useClientOnlyValue } from '@/src/components/useClientOnlyValue';
@@ -26,54 +25,24 @@ export default function TabLayout() {
     }, []);
 
     const tabsConfig = {
+        tabBarStyle: {
+            display: isAnonymous ? 'none' : 'flex'
+        },
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         headerShown: useClientOnlyValue(false, true)
     };
 
-    const handleLoginPress = () => {
-        router.replace('/');
-    };
-
-    const handleCancelPress = () => {
-        router.replace('/(tabs)/identification');
-    };
-
-    const handleTabPress = (tabName: string) => {
-        if (isAnonymous && (tabName === 'feed' || tabName === 'profile')) {
-            Alert.alert(
-                'Aviso',
-                'Você precisa estar logado para acessar essa rotina',
-                [
-                    {
-                        text: 'Cancelar',
-                        onPress: handleCancelPress,
-                        style: 'cancel'
-                    },
-                    {
-                        text: 'Logar',
-                        onPress: handleLoginPress
-                    }
-                ],
-                { cancelable: false }
-            );
-            return true;
-        }
-        return false;
-    };
-
     return (
         <Tabs screenOptions={{ ...tabsConfig }}>
-            {!isAnonymous && (
-                <Screen
-                    name="feed"
-                    options={{
-                        title: t('common.feed'),
-                        tabBarIcon: ({ color }: { color: string }) => (
-                            <Icon name="feed" color={color} />
-                        )
-                    }}
-                />
-            )}
+            <Screen
+                name="feed"
+                options={{
+                    title: t('common.feed'),
+                    tabBarIcon: ({ color }: { color: string }) => (
+                        <Icon name="feed" color={color} />
+                    )
+                }}
+            />
 
             <Screen
                 name="identification"
@@ -85,17 +54,15 @@ export default function TabLayout() {
                 }}
             />
 
-            {!isAnonymous && (
-                <Screen
-                    name="profile"
-                    options={{
-                        title: t('common.profile'),
-                        tabBarIcon: ({ color }: { color: string }) => (
-                            <Icon name="user" color={color} />
-                        )
-                    }}
-                />
-            )}
+            <Screen
+                name="profile"
+                options={{
+                    title: t('common.profile'),
+                    tabBarIcon: ({ color }: { color: string }) => (
+                        <Icon name="user" color={color} />
+                    )
+                }}
+            />
         </Tabs>
     );
 }
