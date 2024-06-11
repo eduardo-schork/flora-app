@@ -16,23 +16,15 @@ const AVALIABLE_MODELS = [
 ];
 
 function SelectPictureScreen({
-    selectedModel,
     openImagePicker,
+    openCamera,
     onChangeSelectedModel,
     ...props
 }: {
-    selectedModel: string;
     openImagePicker: () => void;
+    openCamera: () => void;
     onChangeSelectedModel: (newModel: string) => void;
 }) {
-    function onPressOpenImagePicker() {
-        if (selectedModel) {
-            openImagePicker();
-        } else {
-            ToastAdapter.show('Selecione um modelo antes de continuar');
-        }
-    }
-
     return (
         <View style={styles.container} {...props}>
             <Text style={styles.textIdentification}>
@@ -40,13 +32,16 @@ function SelectPictureScreen({
             </Text>
 
             <View style={styles.methodsContainer}>
-                <TouchableOpacity style={styles.actionButton}>
+                <TouchableOpacity
+                    style={styles.actionButton}
+                    onPress={openCamera}
+                >
                     <Icon name="camera" size={60} color={Colors.primary} />
                 </TouchableOpacity>
 
                 <TouchableOpacity
                     style={styles.actionButton}
-                    onPress={onPressOpenImagePicker}
+                    onPress={openImagePicker}
                 >
                     <Icon name="upload" size={60} color={Colors.primary} />
                 </TouchableOpacity>

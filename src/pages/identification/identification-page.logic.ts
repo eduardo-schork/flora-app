@@ -1,9 +1,11 @@
+import { Camera } from 'expo-camera'; // Importando o pacote expo-camera
 import * as ImagePicker from 'expo-image-picker';
-import mime, { Mime } from 'mime';
-import { useCallback, useState } from 'react';
+import mime from 'mime';
+import { useEffect, useState } from 'react';
 
 import HttpRequestPort from '@/src/infra/http-request/http-request-port';
 import ToastAdapter from '@/src/infra/toast.adapter';
+import t from '@/src/shared/i18n/i18n';
 import { TPrediction } from '@/src/shared/types/prediction.types';
 import PredictImageUsecase from '@/src/shared/usecase/predict-image.usecase';
 
@@ -28,7 +30,27 @@ const useIdentificationPageLogic = () => {
         setSelectedModel(newModel);
     }
 
+    useEffect(() => {
+        (async () => {
+            const { status: cameraStatus } =
+                await Camera.requestCameraPermissionsAsync();
+            const { status: mediaLibraryStatus } =
+                await ImagePicker.requestMediaLibraryPermissionsAsync();
+            if (
+                cameraStatus !== 'granted' ||
+                mediaLibraryStatus !== 'granted'
+            ) {
+                alert(t('permissions.permissionsNeeded'));
+            }
+        })();
+    }, []);
+
     async function openImagePicker() {
+        if (!selectedModel) {
+            ToastAdapter.show(t('common.selectModelFirst'));
+            return;
+        }
+
         const result = await ImagePicker.launchImageLibraryAsync({
             quality: 1,
             selectionLimit: 1,
@@ -51,7 +73,40 @@ const useIdentificationPageLogic = () => {
         sendImageToPredict(imageData?.uri);
     }
 
-    async function sendImageToPredict(imageUri?: string | null) {
+    async function openCamera() {
+        if (!selectedModel) {
+            ToastAdapter.show(t('common.selectModelFirst'));
+            return;
+        }
+
+        const { status } = await Camera.requestCameraPermissionsAsync();
+        if (status !== 'granted') {
+            alert(t('permissions.permissionsNeeded'));
+            return;
+        }
+
+        const result = await ImagePicker.launchCameraAsync({
+            quality: 1,
+            allowsEditing: true,
+            mediaTypes: ImagePicker.MediaTypeOptions.Images
+        });
+
+        if (result.canceled) return;
+
+        const selectedImage = result.assets?.[0];
+        if (!selectedImage) return;
+
+        const imageData = {
+            uri: selectedImage?.uri,
+            base64: selectedImage?.base64
+        };
+
+        setPictureData(imageData);
+
+        sendImageToPredict(imageData?.uri);
+    }
+
+    async function sendImageToPredict(imageUri: string) {
         const uri = imageUri || pictureData?.uri;
 
         const response = await PredictImageUsecase.execute(uri);
@@ -65,7 +120,7 @@ const useIdentificationPageLogic = () => {
         try {
             const uri = pictureData?.uri;
 
-            const predominantClass =
+            const predominantClass: any =
                 predictionResponse?.[selectedModel].predominantClass;
 
             const predictionAssurance =
@@ -109,6 +164,7 @@ const useIdentificationPageLogic = () => {
     return {
         pictureData,
         selectedModel,
+        openCamera,
         openImagePicker,
         onPressTryAgain,
         predictionResponse,

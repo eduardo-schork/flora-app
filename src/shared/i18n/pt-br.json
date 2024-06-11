@@ -5,6 +5,7 @@
     "common.confirm": "Cadastrar",
     "common.register": "Não possui uma conta? Cadastre-se agora!",
     "common.anonymAccess": "Acesse anonimamente",
+    "common.selectModelFirst": "Por favor, selecione um modelo antes de continuar.",
     "common.feed": "Feed",
     "common.profile": "Perfil",
     "common.identification": "Identificação",
@@ -25,5 +26,6 @@
     "picture.deny": "Discordar",
     "picture.postQuestion": "Você deseja postar a foto no feed?",
     "picture.post": "Postar",
-    "picture.fruit": "Qual é a fruta?"
+    "picture.fruit": "Qual é a fruta?",
+    "permissions.permissionsNeeded": "Desculpe, precisamos de permissões de câmera e biblioteca de mídia para fazer isso funcionar!"
 }

@@ -7,6 +7,7 @@ function IdentificationPage({ ...props }) {
         pictureData,
         selectedModel,
         openImagePicker,
+        openCamera,
         onPressTryAgain,
         predictionResponse,
         onChangeSelectedModel,
@@ -30,7 +31,7 @@ function IdentificationPage({ ...props }) {
 
     return (
         <SelectPictureScreen
-            selectedModel={selectedModel}
+            openCamera={openCamera}
             openImagePicker={openImagePicker}
             onChangeSelectedModel={onChangeSelectedModel}
         />
