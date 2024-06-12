@@ -53,3 +53,7 @@ yarn run android
 ```
 
 Após seguir os passos corretamente, a aplicação deve funcionar conforme o esperado!
+
+### Executar o projeto localmente
+
+Atualmente o projeto aponta os requests `http` para nosso servidor na aws, para apontar os requests para um servidor na máquina local é necessário ir ao arquivo `axios-request-adapter.ts` e alterar a variável `API_BASE_URL` para o IP e porta do servidor local.

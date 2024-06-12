@@ -50,7 +50,7 @@ function SignInPage({ ...props }) {
                 <CompanyBanner />
 
                 <TextInput
-                    placeholder={t('auth.name')}
+                    placeholder={t('auth.email')}
                     style={styles.textInput}
                     onChangeText={(text) => setEmail(text)}
                 />
