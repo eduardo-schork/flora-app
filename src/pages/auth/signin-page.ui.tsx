@@ -12,6 +12,7 @@ import {
 import styles from './signin.styles';
 
 import CompanyBanner from '@/src/components/company-banner.ui';
+import GoBackButton from '@/src/components/go-back-button.ui';
 import Icon from '@/src/components/icon.ui';
 import t from '@/src/shared/i18n/i18n';
 import AuthSigninUsecase from '@/src/shared/usecase/auth-signin.usecase';
@@ -77,6 +78,8 @@ function SignInPage({ ...props }) {
                         {t('common.signIn').toUpperCase()}
                     </Text>
                 </TouchableOpacity>
+
+                <GoBackButton />
             </View>
         </SafeAreaView>
     );

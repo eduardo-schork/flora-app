@@ -1,6 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Tabs } from 'expo-router';
-import { Screen } from 'expo-router/build/views/Screen';
 import React, { useState, useEffect } from 'react';
 
 import Icon from '@/src/components/icon.ui';
@@ -34,19 +33,18 @@ export default function TabLayout() {
 
     return (
         <Tabs screenOptions={{ ...tabsConfig }}>
-            {isAnonymous ? (
-                <Screen
-                    name="feed"
-                    options={{
-                        title: t('common.feed'),
-                        tabBarIcon: ({ color }: { color: string }) => (
-                            <Icon name="feed" color={color} />
-                        )
-                    }}
-                />
-            ) : null}
+            <Tabs.Screen
+                redirect={isAnonymous}
+                name="feed"
+                options={{
+                    title: t('common.feed'),
+                    tabBarIcon: ({ color }: { color: string }) => (
+                        <Icon name="feed" color={color} />
+                    )
+                }}
+            />
 
-            <Screen
+            <Tabs.Screen
                 name="identification"
                 options={{
                     title: t('common.identification'),
@@ -56,17 +54,16 @@ export default function TabLayout() {
                 }}
             />
 
-            {isAnonymous ? (
-                <Screen
-                    name="profile"
-                    options={{
-                        title: t('common.profile'),
-                        tabBarIcon: ({ color }: { color: string }) => (
-                            <Icon name="user" color={color} />
-                        )
-                    }}
-                />
-            ) : null}
+            <Tabs.Screen
+                redirect={isAnonymous}
+                name="profile"
+                options={{
+                    title: t('common.profile'),
+                    tabBarIcon: ({ color }: { color: string }) => (
+                        <Icon name="user" color={color} />
+                    )
+                }}
+            />
         </Tabs>
     );
 }

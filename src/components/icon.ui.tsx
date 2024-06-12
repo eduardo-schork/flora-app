@@ -1,4 +1,5 @@
 import { FontAwesome } from '@expo/vector-icons';
+import { IconProps } from '@expo/vector-icons/build/createIconSet';
 
 import Colors from '../shared/styles/Colors';
 
@@ -10,7 +11,7 @@ function Icon({
     name: React.ComponentProps<typeof FontAwesome>['name'];
     color?: string;
     size?: number;
-}) {
+} & IconProps<string>) {
     return <FontAwesome {...{ ...props, color, size }} />;
 }
 

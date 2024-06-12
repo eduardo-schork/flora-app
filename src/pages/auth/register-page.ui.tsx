@@ -12,9 +12,10 @@ import {
 import styles from './register.styles';
 
 import CompanyBanner from '@/src/components/company-banner.ui';
+import GoBackButton from '@/src/components/go-back-button.ui';
+import Icon from '@/src/components/icon.ui';
 import t from '@/src/shared/i18n/i18n';
 import AuthRegisterUsecase from '@/src/shared/usecase/auth-register.usecase';
-import Icon from '@/src/components/icon.ui';
 
 function RegisterPage({ ...props }) {
     const [name, setName] = useState('');
@@ -69,7 +70,10 @@ function RegisterPage({ ...props }) {
                         secureTextEntry={!passwordVisible}
                         onChangeText={(text) => setPassword(text)}
                     />
-                    <TouchableOpacity onPress={togglePasswordVisibility} style={styles.icon}>
+                    <TouchableOpacity
+                        onPress={togglePasswordVisibility}
+                        style={styles.icon}
+                    >
                         <Icon
                             name={passwordVisible ? 'eye' : 'eye-slash'}
                             size={20}
@@ -77,11 +81,15 @@ function RegisterPage({ ...props }) {
                     </TouchableOpacity>
                 </View>
 
-                <TouchableOpacity onPress={onRegisterPress} style={styles.button}>
+                <TouchableOpacity
+                    onPress={onRegisterPress}
+                    style={styles.button}
+                >
                     <Text style={styles.text}>
                         {t('common.confirm').toUpperCase()}
                     </Text>
                 </TouchableOpacity>
+                <GoBackButton />
             </View>
         </SafeAreaView>
     );
