@@ -3,6 +3,8 @@ import Axios, { AxiosInstance, AxiosRequestHeaders } from 'axios';
 
 import { HttpRequestParams, IHttpRequestPort } from './http-request-port';
 
+// Local machine IP if running app in dev mode
+// const API_BASE_URL = 'http://192.168.4.12:3000';
 const API_BASE_URL = 'http://52.67.103.199:3000';
 
 type CreateClientProps = {
